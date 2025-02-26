@@ -1,0 +1,428 @@
+/* Variables globales de colores */
+:root {
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --bg-tertiary: #2d2d2d;
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --accent-primary: #7b68ee; /* Violeta */
+  --accent-secondary: #4682b4; /* Azul acero */
+  --danger: #ff5252;
+  --success: #4caf50;
+  --warning: #ffb74d;
+  --border-radius: 8px;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --transition: all 0.3s ease;
+}
+
+/* Estilos generales */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Cabecera */
+header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--bg-tertiary);
+}
+
+h1 {
+  color: var(--accent-primary);
+  margin-bottom: 0.5rem;
+  font-size: 2.2rem;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+h2 {
+  color: var(--accent-secondary);
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+h3 {
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+  border-left: 4px solid var(--accent-primary);
+  padding-left: 10px;
+}
+
+/* Formularios */
+.login-form, .form-container {
+  background-color: var(--bg-secondary);
+  padding: 3rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+/* Para el grupo de input de lugar de trabajo */
+.workplace-input-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.action-button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.workplaces-list {
+  margin-top: 10px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.workplace-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-tertiary);
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: var(--border-radius);
+}
+
+.workplace-item .remove-button {
+  background-color: var(--danger);
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Para el grupo de checkbox */
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+}
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"] {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid var(--bg-tertiary);
+  border-radius: var(--border-radius);
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px rgba(123, 104, 238, 0.3);
+}
+
+input::placeholder {
+  color: #666;
+}
+
+/* Botones */
+button {
+  cursor: pointer;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.primary-button {
+  background-color: var(--accent-primary);
+  color: white;
+}
+
+.primary-button:hover {
+  background-color: #6a5acd;
+  transform: translateY(-2px);
+}
+
+.back-button {
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+.back-button:hover {
+  background-color: #3a3a3a;
+}
+
+.danger-button {
+  background-color: var(--danger);
+  color: white;
+}
+
+.danger-button:hover {
+  background-color: #ff3333;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Menús */
+.menu-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.menu-option {
+  background-color: var(--bg-secondary);
+  padding: 1.2rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+  border-left: 3px solid transparent;
+}
+
+.menu-option:hover {
+  background-color: var(--bg-tertiary);
+  border-left-color: var(--accent-primary);
+  transform: translateY(-3px);
+}
+
+/* Áreas de resultados */
+.result-container, .result-area {
+  background-color: var(--bg-secondary);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  margin-top: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.data-list {
+  margin-bottom: 1.5rem;
+  gap: 1.5rem;
+}
+
+.data-list .teacher-card {
+  background-color: var(--bg-tertiary);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: var(--border-radius);
+  border-left: 3px solid var(--accent-secondary);
+}
+
+.data-list .teacher-card h4 {
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+}
+
+.data-list .teacher-card p {
+  color: var(--text-secondary);
+  margin-bottom: 0.8rem;
+}
+
+.data-list .teacher-eligible {
+  border-left-color: var(--success);
+}
+
+/* Estados de visualización */
+.hidden {
+  display: none;
+}
+
+/* Mensajes de error y éxito */
+.error {
+  color: var(--danger);
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.success {
+  color: var(--success);
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.warning {
+  color: var(--warning);
+  margin-top: 1rem;
+  font-weight: 500;
+}
+/* Estilos para detalles del maestro */
+.teacher-details {
+  background-color: var(--bg-secondary);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  margin-top: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.teacher-details h3 {
+  color: var(--accent-primary);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.teacher-info-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-bottom: 1rem;
+}
+
+.teacher-info-table th,
+.teacher-info-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid var(--bg-tertiary);
+}
+
+.teacher-info-table th {
+  width: 40%;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.eligible {
+  color: var(--success);
+  font-weight: bold;
+}
+
+.not-eligible {
+  color: var(--warning);
+  font-weight: bold;
+}
+
+.workplaces-list {
+  margin: 0;
+  padding-left: 20px;
+}
+.workplaces-list-small {
+  margin: 0;
+  padding-left: 1rem;
+  font-size: 0.9em;
+}
+
+.workplaces-list li {
+  margin-bottom: 5px;
+}
+.workplaces-list-small li {
+  margin-bottom: 0.2rem;
+}
+
+.eligible-teachers-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+
+.eligible-teachers-table th,
+.eligible-teachers-table td {
+  border: 0.5px solid #303942;
+  padding: 8px;
+  text-align: left;
+}
+
+
+.eligible-teachers-table th {
+  background-color: #23345a;
+  font-weight: bold;
+}
+
+.eligible {
+  color: #2ecc71;
+  font-weight: bold;
+}
+.eligible-teachers-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+/* Pie de página */
+footer {
+  margin-top: auto;
+  text-align: center;
+  padding-top: 2rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+
+/* Media queries para responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  .button-group {
+    flex-direction: column;
+  }
+  
+  .login-form, .form-container {
+    padding: 1.5rem;
+  }
+}

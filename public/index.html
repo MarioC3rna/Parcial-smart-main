@@ -1,0 +1,186 @@
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Gestión de Maestros Jubilados</title>
+  <!-- Enlace a hoja de estilos -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- Fuente de Google para iconos -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body>
+  <div class="container">
+    <!-- Cabecera principal -->
+    <header>
+      <h1>📚 Sistema de Gestión de Maestros Jubilados 👨‍🏫</h1>
+      <p class="subtitle">Administra y consulta información de docentes de forma eficiente</p>
+    </header>
+    
+    <!-- Formulario de Login -->
+    <section id="login-form" class="login-form">
+      <h2>🔐 Iniciar Sesión</h2>
+      <div class="form-group">
+        <label for="username">👤 Usuario:</label>
+        <input type="text" id="username" name="username" placeholder="Ingrese su usuario" required>
+      </div>
+      <div class="form-group">
+        <label for="password">🔒 Contraseña:</label>
+        <input type="password" id="password" name="password" placeholder="Ingrese su contraseña" required>
+      </div>
+      <button id="login-button" class="primary-button">Ingresar</button>
+      <p id="login-error" class="error hidden">⚠️ Credenciales incorrectas. Intente nuevamente.</p>
+    </section>
+    
+    <!-- Panel de Administrador -->
+    <section id="admin-panel" class="admin-panel hidden">
+      <h2>⚙️ Panel de Administrador</h2>
+      <div id="admin-menu" class="menu-container">
+        <div class="menu-option" id="add-teacher-option">➕ Agregar maestro</div>
+        <div class="menu-option" id="remove-teacher-option">➖ Eliminar maestro</div>
+        <div class="menu-option" id="search-teacher-option">🔍 Buscar maestro</div>
+        <div class="menu-option" id="eligible-teachers-option">🎓 Ver maestros elegibles para jubilación</div>
+        <div class="menu-option" id="logout-option">🚪 Cerrar sesión</div>
+      </div>
+      
+      <!-- Formulario para agregar maestro -->
+      <div id="add-teacher-form" class="form-container hidden">
+        <h3>➕ Agregar Maestro</h3>
+        <!-- Campos existentes -->
+        <div class="form-group">
+          <label for="teacher-dpi">🆔 DPI:</label>
+          <input type="text" id="teacher-dpi" placeholder="Ej: 1234567890101" required>
+        </div>
+        <div class="form-group">
+          <label for="teacher-name">👤 Nombre completo:</label>
+          <input type="text" id="teacher-name" placeholder="Ej: Juan Pérez González" required>
+        </div>
+        <div class="form-group">
+          <label for="teacher-time">⏱️ Tiempo ejercido (años):</label>
+          <input type="number" id="teacher-time" min="0" placeholder="Ej: 15" required>
+        </div>
+        
+        <!-- Nuevos campos -->
+        <div class="form-group">
+          <label for="teacher-position">🏢 Puesto de trabajo:</label>
+          <input type="text" id="teacher-position" placeholder="Ej: Profesor de Matemáticas">
+        </div>
+        <div class="form-group">
+          <label for="teacher-code">🔢 Código de trabajo:</label>
+          <input type="text" id="teacher-code" placeholder="Ej: PROF-2023-001">
+        </div>
+        <div class="form-group">
+          <label for="teacher-level">🏅 Nivel de Escalafón:</label>
+          <input type="text" id="teacher-level" placeholder="Ej: A1, B2, etc.">
+        </div>
+        <div class="form-group">
+          <label for="teacher-salary">💰 Sueldo:</label>
+          <input type="number" id="teacher-salary" min="0" step="0.01" placeholder="Ej: 5000.00">
+        </div>
+        
+        <div class="form-group">
+          <label for="teacher-workplace">📍 Lugar de trabajo:</label>
+          <div class="workplace-input-group">
+            <input type="text" id="teacher-workplace" placeholder="Ej: Escuela Nacional Central">
+            <button type="button" id="add-workplace" class="action-button">+</button>
+          </div>
+          <div id="workplaces-container" class="workplaces-list"></div>
+        </div>
+        
+        
+        <div class="form-group checkbox-group">
+          <label>
+            <input type="checkbox" id="teacher-budget">
+            💼 Plaza presupuestada
+          </label>
+        </div>
+
+
+        <div class="button-group">
+    <button id="add-teacher-button" class="primary-button">Agregar</button>
+    <button class="back-button" id="add-teacher-back">Volver</button>
+    </div>
+    </div>
+      
+      <!-- Formulario para buscar maestro -->
+      <div id="search-teacher-form" class="form-container hidden">
+        <h3>🔍 Buscar Maestro</h3>
+        <div class="form-group">
+          <label for="search-dpi">🆔 DPI del maestro:</label>
+          <input type="text" id="search-dpi" placeholder="Ingrese DPI a buscar" required>
+        </div>
+        <div class="button-group">
+          <button id="search-teacher-button" class="primary-button">Buscar</button>
+          <button class="back-button" id="search-teacher-back">Volver</button>
+        </div>
+      </div>
+
+      <!-- Formulario para eliminar maestro -->
+      <div id="remove-teacher-form" class="form-container hidden">
+    <h3>➖ Eliminar Maestro</h3>
+    <div class="form-group">
+    <label for="remove-dpi">🆔 DPI del maestro:</label>
+    <input type="text" id="remove-dpi" placeholder="Ingrese DPI a eliminar" required>
+      </div>
+   <div class="button-group">
+    <button id="remove-teacher-button" class="danger-button">Eliminar</button>
+    <button class="back-button" id="remove-teacher-back">Volver</button>
+      </div>
+    </div>
+      
+      <!-- Sección para mostrar maestros elegibles -->
+      <div id="eligible-teachers-result" class="result-container hidden">
+        <h3>🎓 Maestros Elegibles para Jubilación</h3>
+        <div id="eligible-teachers-list" class="data-list"></div>
+        <button class="back-button" id="eligible-teachers-back">Volver</button>
+      </div>
+      
+      <!-- Área de resultados para administrador -->
+      <div id="result-area" class="result-area hidden"></div>
+    </section>
+    
+
+
+
+
+
+
+    <!-- Panel de Visualizador -->
+    <section id="viewer-panel" class="viewer-panel hidden">
+      <h2>👁️ Panel de Visualización</h2>
+      <div id="viewer-menu" class="menu-container">
+        <!-- En el menú del visualizador, añade esta opción -->
+    
+        <div class="menu-option" id="viewer-search-option">🔍 Buscar maestro por DPI</div>
+        <div class="menu-option" id="viewer-logout-option">🚪 Cerrar sesión</div>
+      </div>
+      
+      <!-- Formulario de búsqueda para visualizador -->
+      <div id="viewer-search-form" class="form-container hidden">
+        <h3>🔍 Buscar Maestro</h3>
+        <div class="form-group">
+          <label for="viewer-search-dpi">🆔 DPI del maestro:</label>
+          <input type="text" id="viewer-search-dpi" placeholder="Ingrese DPI a buscar" required>
+        </div>
+        <div class="button-group">
+          <button id="viewer-search-button" class="primary-button">Buscar</button>
+          <button class="back-button" id="viewer-search-back">Volver</button>
+        </div>
+      </div>
+      
+      <!-- Área de resultados para visualizador -->
+      <div id="viewer-result-area" class="result-area hidden"></div>
+    </section>
+
+    <!-- Pie de página -->
+    <footer>
+      <p>© 2025 Sistema de Gestión de Maestros Jubilados | Todos los derechos reservados</p>
+    </footer>
+  </div>
+
+  <!-- Script principal -->
+  <script type="module" src="index.js"></script>
+</body>
+</html>
