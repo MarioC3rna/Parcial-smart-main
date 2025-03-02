@@ -1,9 +1,20 @@
+/**
+ * @fileoverview Sistema de Gestión de Maestros y Jubilaciones
+ * @version 1.0.0
+ * @author Equipo de Desarrollo
+ * @description Sistema que permite la gestión de información de docentes,
+ * con funcionalidades específicas para el cálculo y seguimiento de jubilaciones.
+ */
+
 import LinkedList from '../controllers/LinkedList.js';
 import Node from '../models/Node.js';
 import Admin from '../users/Admin.js';
 import Viewer from '../users/Viewer.js';
 
-// Simulación de variables de entorno (en una aplicación real usarías .env y un servidor)
+/**
+ * Configuración de credenciales del sistema
+ * @const {Object} ENV - Almacena las credenciales de acceso
+ */
 const ENV = {
   ADMIN_USERNAME: 'admin',
   ADMIN_PASSWORD: '123',
@@ -11,14 +22,30 @@ const ENV = {
   VIEWER_PASSWORD: '123'
 };
 
-// Crear una lista enlazada para almacenar los maestros
+/**
+ * Lista enlazada que almacena todos los registros de maestros
+ * @type {LinkedList}
+ */
 const teachersList = new LinkedList();
 
-// Variables para el usuario actual
+/**
+ * Variable que almacena el usuario actual en sesión
+ * @type {Admin|Viewer|null}
+ */
 let currentUser = null;
+
+/**
+ * Arreglo para almacenar temporalmente los lugares de trabajo durante el registro
+ * @type {Array<string>}
+ */
 let workplaces = [];
 
-// Función para autenticar usuarios
+/**
+ * Autentica al usuario basado en sus credenciales
+ * @param {string} username - Nombre de usuario
+ * @param {string} password - Contraseña del usuario
+ * @returns {Admin|Viewer|null} Instancia del usuario autenticado o null si las credenciales son inválidas
+ */
 function authenticateUser(username, password) {
   if (username === ENV.ADMIN_USERNAME && password === ENV.ADMIN_PASSWORD) {
     return new Admin(username);
@@ -31,29 +58,38 @@ function authenticateUser(username, password) {
   return null;
 }
 
-// Ocultar todos los formularios y paneles
+/**
+ * Oculta todos los paneles y formularios del sistema
+ */
 function hideAllPanels() {
   document.querySelectorAll('.login-form, .admin-panel, .viewer-panel, #add-teacher-form, #remove-teacher-form, #search-teacher-form, #eligible-teachers-result, #viewer-search-form, #result-area, #viewer-result-area').forEach(el => {
     el.classList.add('hidden');
   });
 }
 
-// Mostrar panel de administrador
+/**
+ * Muestra el panel de administrador
+ */
 function showAdminPanel() {
   hideAllPanels();
   document.getElementById('admin-panel').classList.remove('hidden');
   document.getElementById('admin-menu').classList.remove('hidden');
 }
 
-// Mostrar panel de viewer
+/**
+ * Muestra el panel de visualizador
+ */
 function showViewerPanel() {
   hideAllPanels();
   document.getElementById('viewer-panel').classList.remove('hidden');
   document.getElementById('viewer-menu').classList.remove('hidden');
 }
 
-// Función para crear un elemento de tabla con los datos del maestro
-
+/**
+ * Genera una tabla HTML con los datos del maestro
+ * @param {Object} teacher - Objeto con información del maestro
+ * @returns {string} HTML con los datos formateados del maestro
+ */
 function createTeacherTable(teacher) {
   if (!teacher) return '<p>No se encontró ningún maestro con ese DPI.</p>';
   
@@ -125,9 +161,12 @@ function createTeacherTable(teacher) {
   `;
 }
 
-// Event Listeners
+// ============== GESTIÓN DE EVENTOS ==============
 
-// Login
+/**
+ * Evento de inicio de sesión
+ * Valida las credenciales y muestra el panel correspondiente
+ */
 document.getElementById('login-button').addEventListener('click', () => {
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
@@ -145,7 +184,12 @@ document.getElementById('login-button').addEventListener('click', () => {
   }
 });
 
-// Admin Panel Options
+// ============== PANEL DE ADMINISTRADOR ==============
+
+/**
+ * Eventos para las opciones del menú de administrador
+ * Cada opción muestra el formulario o panel correspondiente
+ */
 document.getElementById('add-teacher-option').addEventListener('click', () => {
   hideAllPanels();
   document.getElementById('admin-panel').classList.remove('hidden');
@@ -164,6 +208,9 @@ document.getElementById('search-teacher-option').addEventListener('click', () =>
   document.getElementById('search-teacher-form').classList.remove('hidden');
 });
 
+/**
+ * Muestra la lista de maestros elegibles para jubilación
+ */
 document.getElementById('eligible-teachers-option').addEventListener('click', () => {
   hideAllPanels();
   document.getElementById('admin-panel').classList.remove('hidden');
@@ -225,6 +272,9 @@ document.getElementById('eligible-teachers-option').addEventListener('click', ()
   }
 });
 
+/**
+ * Cierra la sesión actual
+ */
 document.getElementById('logout-option').addEventListener('click', () => {
   currentUser = null;
   hideAllPanels();
@@ -234,9 +284,11 @@ document.getElementById('logout-option').addEventListener('click', () => {
   document.getElementById('login-error').classList.add('hidden');
 });
 
-// Admin Form Submissions
+// ============== FUNCIONALIDADES DE ADMINISTRACIÓN ==============
 
-// Agregar maestro
+/**
+ * Gestiona la adición de un nuevo maestro al sistema
+ */
 document.getElementById('add-teacher-button').addEventListener('click', () => {
   const dpi = document.getElementById('teacher-dpi').value;
   const nombre = document.getElementById('teacher-name').value;
@@ -287,7 +339,9 @@ document.getElementById('add-teacher-button').addEventListener('click', () => {
   document.getElementById('workplaces-container').innerHTML = '';
 });
 
-// Agregar manejo de lugares de trabajo
+/**
+ * Gestiona la adición de lugares de trabajo para un maestro
+ */
 document.getElementById('add-workplace').addEventListener('click', () => {
   const workplace = document.getElementById('teacher-workplace').value.trim();
   if (workplace) {
@@ -321,8 +375,9 @@ document.getElementById('add-workplace').addEventListener('click', () => {
   }
 });
 
-
-// Eliminar maestro
+/**
+ * Gestiona la eliminación de maestros por DPI
+ */
 document.getElementById('remove-teacher-button').addEventListener('click', () => {
   const dpi = document.getElementById('remove-dpi').value;
   
@@ -345,10 +400,9 @@ document.getElementById('remove-teacher-button').addEventListener('click', () =>
   document.getElementById('remove-dpi').value = '';
 });
 
-
-
-// Buscar maestro (admin)
-// Para el botón de búsqueda del administrador
+/**
+ * Gestiona la búsqueda de maestros para el administrador
+ */
 document.getElementById('search-teacher-button').addEventListener('click', () => {
   const dpi = document.getElementById('search-dpi').value;
   
@@ -364,7 +418,11 @@ document.getElementById('search-teacher-button').addEventListener('click', () =>
   resultArea.classList.remove('hidden');
 });
 
-// Para el botón de búsqueda del visualizador
+// ============== PANEL DE VISUALIZADOR ==============
+
+/**
+ * Gestiona la búsqueda de maestros para el visualizador
+ */
 document.getElementById('viewer-search-button').addEventListener('click', () => {
   const dpi = document.getElementById('viewer-search-dpi').value;
   
@@ -380,7 +438,9 @@ document.getElementById('viewer-search-button').addEventListener('click', () => 
   resultArea.classList.remove('hidden');
 });
 
-// Viewer Options
+/**
+ * Eventos para las opciones del menú de visualizador
+ */
 document.getElementById('viewer-search-option').addEventListener('click', () => {
   hideAllPanels();
   document.getElementById('viewer-panel').classList.remove('hidden');
@@ -396,16 +456,15 @@ document.getElementById('viewer-logout-option').addEventListener('click', () => 
   document.getElementById('login-error').classList.add('hidden');
 });
 
-
-// ----------------Buscar maestro (viewer)--------------------------------
-
-
-// Agregar en tu JavaScript después de los otros event listeners de opciones del visualizador
+/**
+ * Muestra información específica de jubilación para el visualizador
+ * @note Requiere corrección: userDPI no está definido en el código actual
+ */
 document.getElementById('viewer-retirement-option').addEventListener('click', () => {
   hideAllPanels();
   document.getElementById('viewer-panel').classList.remove('hidden');
   
-  
+  // NOTA: Hay un error aquí, userDPI no está definido
   const teacher = teachersList.search(userDPI);
   
   const resultArea = document.getElementById('viewer-result-area');
@@ -413,8 +472,9 @@ document.getElementById('viewer-retirement-option').addEventListener('click', ()
   resultArea.classList.remove('hidden');
 });
 
-
-// Back buttons
+/**
+ * Gestiona los botones de retorno en los formularios
+ */
 document.querySelectorAll('.back-button').forEach(button => {
   button.addEventListener('click', () => {
     if (currentUser.role === 'admin') {
@@ -424,4 +484,3 @@ document.querySelectorAll('.back-button').forEach(button => {
     }
   });
 });
-
